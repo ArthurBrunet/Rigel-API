@@ -1,9 +1,9 @@
 sonata_admin:
     title: 'Rigel Admin'
-    title_logo: '/bundles/admin/orion_logo.png'
+    title_logo: '/assets/orion_logo.png'
     assets:
         extra_stylesheets:
-            - "/bundles/admin/css/custom.css"
+            - "/assets/css/custom.css"
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
