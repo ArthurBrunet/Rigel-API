@@ -53,6 +53,26 @@ class User implements UserInterface
      */
     private $token;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatar;
+
+    /**
+     * @ORM\Column(type="string", length=45, nullable=true)
+     */
+    private $drink;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isEnable;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVisible;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -180,6 +200,54 @@ class User implements UserInterface
     public function setToken(string $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getDrink(): ?string
+    {
+        return $this->drink;
+    }
+
+    public function setDrink(?string $drink): self
+    {
+        $this->drink = $drink;
+
+        return $this;
+    }
+
+    public function getIsEnable(): ?bool
+    {
+        return $this->isEnable;
+    }
+
+    public function setIsEnable(bool $isEnable): self
+    {
+        $this->isEnable = $isEnable;
+
+        return $this;
+    }
+
+    public function getIsVisible(): ?bool
+    {
+        return $this->isVisible;
+    }
+
+    public function setIsVisible(bool $isVisible): self
+    {
+        $this->isVisible = $isVisible;
 
         return $this;
     }
