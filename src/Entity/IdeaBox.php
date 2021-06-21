@@ -32,6 +32,17 @@ class IdeaBox
      */
     private $publicationDate;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $reaction;
+
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="ideaBox", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $idUser;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +80,30 @@ class IdeaBox
     public function setPublicationDate(?\DateTimeInterface $publicationDate): self
     {
         $this->publicationDate = $publicationDate;
+
+        return $this;
+    }
+
+    public function getReaction(): ?string
+    {
+        return $this->reaction;
+    }
+
+    public function setReaction(?string $reaction): self
+    {
+        $this->reaction = $reaction;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?User
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(User $idUser): self
+    {
+        $this->idUser = $idUser;
 
         return $this;
     }

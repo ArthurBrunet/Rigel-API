@@ -73,6 +73,11 @@ class User implements UserInterface
      */
     private $isVisible;
 
+    /**
+     * @ORM\OneToOne(targetEntity=IdeaBox::class, mappedBy="idUser", cascade={"persist", "remove"})
+     */
+    private $ideaBox;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -248,6 +253,23 @@ class User implements UserInterface
     public function setIsVisible(bool $isVisible): self
     {
         $this->isVisible = $isVisible;
+
+        return $this;
+    }
+
+    public function getIdeaBox(): ?IdeaBox
+    {
+        return $this->ideaBox;
+    }
+
+    public function setIdeaBox(IdeaBox $ideaBox): self
+    {
+        // set the owning side of the relation if necessary
+        if ($ideaBox->getIdUser() !== $this) {
+            $ideaBox->setIdUser($this);
+        }
+
+        $this->ideaBox = $ideaBox;
 
         return $this;
     }
