@@ -139,9 +139,6 @@
     "nikic/php-parser": {
         "version": "v4.10.5"
     },
-    "php": {
-        "version": "7.4"
-    },
     "phpstan/phpdoc-parser": {
         "version": "0.5.4"
     },
