@@ -80,9 +80,21 @@ class User implements UserInterface
      */
     private $posts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=EmergencyAperitif::class, mappedBy="User")
+     */
+    private $emergencyAperitifs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=AperitifResponse::class, mappedBy="User")
+     */
+    private $aperitifResponses;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->emergencyAperitifs = new ArrayCollection();
+        $this->aperitifResponses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -288,6 +300,66 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($post->getUser() === $this) {
                 $post->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmergencyAperitif[]
+     */
+    public function getEmergencyAperitifs(): Collection
+    {
+        return $this->emergencyAperitifs;
+    }
+
+    public function addEmergencyAperitif(EmergencyAperitif $emergencyAperitif): self
+    {
+        if (!$this->emergencyAperitifs->contains($emergencyAperitif)) {
+            $this->emergencyAperitifs[] = $emergencyAperitif;
+            $emergencyAperitif->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmergencyAperitif(EmergencyAperitif $emergencyAperitif): self
+    {
+        if ($this->emergencyAperitifs->removeElement($emergencyAperitif)) {
+            // set the owning side to null (unless already changed)
+            if ($emergencyAperitif->getUser() === $this) {
+                $emergencyAperitif->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AperitifResponse[]
+     */
+    public function getAperitifResponses(): Collection
+    {
+        return $this->aperitifResponses;
+    }
+
+    public function addAperitifResponse(AperitifResponse $aperitifResponse): self
+    {
+        if (!$this->aperitifResponses->contains($aperitifResponse)) {
+            $this->aperitifResponses[] = $aperitifResponse;
+            $aperitifResponse->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAperitifResponse(AperitifResponse $aperitifResponse): self
+    {
+        if ($this->aperitifResponses->removeElement($aperitifResponse)) {
+            // set the owning side to null (unless already changed)
+            if ($aperitifResponse->getUser() === $this) {
+                $aperitifResponse->setUser(null);
             }
         }
 
