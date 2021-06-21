@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -77,6 +79,16 @@ class User implements UserInterface
      * @ORM\OneToOne(targetEntity=IdeaBox::class, mappedBy="idUser", cascade={"persist", "remove"})
      */
     private $ideaBox;
+
+    /**
+     * @ORM\OneToMany(targetEntity=IdeaBox::class, mappedBy="idUser", orphanRemoval=true)
+     */
+    private $ideaBoxes;
+
+    public function __construct()
+    {
+        $this->ideaBoxes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -257,20 +269,34 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getIdeaBox(): ?IdeaBox
+    /**
+     * @return Collection|IdeaBox[]
+     */
+    public function getIdeaBoxes(): Collection
     {
-        return $this->ideaBox;
+        return $this->ideaBoxes;
     }
 
-    public function setIdeaBox(IdeaBox $ideaBox): self
+    public function addIdeaBox(IdeaBox $ideaBox): self
     {
-        // set the owning side of the relation if necessary
-        if ($ideaBox->getIdUser() !== $this) {
+        if (!$this->ideaBoxes->contains($ideaBox)) {
+            $this->ideaBoxes[] = $ideaBox;
             $ideaBox->setIdUser($this);
         }
 
-        $this->ideaBox = $ideaBox;
+        return $this;
+    }
+
+    public function removeIdeaBox(IdeaBox $ideaBox): self
+    {
+        if ($this->ideaBoxes->removeElement($ideaBox)) {
+            // set the owning side to null (unless already changed)
+            if ($ideaBox->getIdUser() === $this) {
+                $ideaBox->setIdUser(null);
+            }
+        }
 
         return $this;
     }
+
 }

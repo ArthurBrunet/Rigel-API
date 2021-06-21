@@ -38,10 +38,11 @@ class IdeaBox
     private $reaction;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="ideaBox", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="ideaBoxes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $idUser;
+
 
     public function getId(): ?int
     {
@@ -101,10 +102,11 @@ class IdeaBox
         return $this->idUser;
     }
 
-    public function setIdUser(User $idUser): self
+    public function setIdUser(?User $idUser): self
     {
         $this->idUser = $idUser;
 
         return $this;
     }
+
 }
