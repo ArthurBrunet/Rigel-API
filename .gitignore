@@ -253,3 +253,6 @@ $RECYCLE.BIN/
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
+
+### Media
+/public/upload/media/default
