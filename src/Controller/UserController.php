@@ -35,6 +35,7 @@ class UserController extends AbstractController
         //Récupération de la data dans le JSON
         $datas = json_decode($request->getContent(), true);
 
+
         // Génération du form qui se base sur l'entité USER
         $form = $this->createForm(RegistrationType::class, $user);
 

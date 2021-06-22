@@ -6,6 +6,7 @@ use App\Entity\User;
 use Sonata\Form\Type\BooleanType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,9 +21,9 @@ class RegistrationType extends AbstractType
             ->add('password', PasswordType::class)
             ->add('name', TextType::class)
             ->add('firstname', TextType::class)
-            ->add('token')
-            ->add('avatar')
-            ->add('drink');
+            ->add('avatar', FileType::class)
+            ->add('phoneNumber', TextType::class)
+            ->add('drink', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
