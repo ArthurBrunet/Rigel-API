@@ -76,6 +76,18 @@ class User implements UserInterface
     private $isVisible;
 
     /**
+     * @ORM\OneToOne(targetEntity=IdeaBox::class, mappedBy="idUser", cascade={"persist", "remove"})
+     */
+    private $ideaBox;
+
+    /**
+     * @ORM\OneToMany(targetEntity=IdeaBox::class, mappedBy="idUser", orphanRemoval=true)
+     */
+    private $ideaBoxes;
+
+    public function __construct()
+    {
+        $this->ideaBoxes = new ArrayCollection();
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user")
      */
     private $posts;
@@ -277,6 +289,18 @@ class User implements UserInterface
     }
 
     /**
+     * @return Collection|IdeaBox[]
+     */
+    public function getIdeaBoxes(): Collection
+    {
+        return $this->ideaBoxes;
+    }
+
+    public function addIdeaBox(IdeaBox $ideaBox): self
+    {
+        if (!$this->ideaBoxes->contains($ideaBox)) {
+            $this->ideaBoxes[] = $ideaBox;
+            $ideaBox->setIdUser($this);
      * @return Collection|Post[]
      */
     public function getPosts(): Collection
@@ -294,6 +318,12 @@ class User implements UserInterface
         return $this;
     }
 
+    public function removeIdeaBox(IdeaBox $ideaBox): self
+    {
+        if ($this->ideaBoxes->removeElement($ideaBox)) {
+            // set the owning side to null (unless already changed)
+            if ($ideaBox->getIdUser() === $this) {
+                $ideaBox->setIdUser(null);
     public function removePost(Post $post): self
     {
         if ($this->posts->removeElement($post)) {
