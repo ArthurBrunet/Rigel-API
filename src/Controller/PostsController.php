@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -18,7 +18,7 @@ class PostsController extends AbstractController
     /**
      * @Route("/posts", name="posts")
      */
-    public function getAllPosts(Request $request,PostRepository $postRepository): JsonResponse
+    public function getAllPosts(Request $request,PostRepository $postRepository)
     {
         $filter = [];
         $em = $this->getDoctrine()->getManager();
@@ -28,7 +28,21 @@ class PostsController extends AbstractController
                 $filter[$value] = $request->query->get($value);
             }
         }
-        return JsonResponse::fromJsonString($this->serializePosts($postRepository->findBy($filter)));
+        $posts = $postRepository->findBy($filter);
+        $result = [];
+        foreach ($posts as $post) {
+            $postDTO = new PostDTO();
+            $postDTO->setId($post->getId());
+            $postDTO->setContent($post->getContent());
+            $postDTO->setTitle($post->getTitle());
+            $postDTO->setDatePost($post->getDatePost()->format('Y-m-d H:i:s'));
+            $postDTO->setMediaUrl($_SERVER['SERVER'].$_SERVER['PATH_IMAGE'].$post->getMedia()->getProviderReference());
+            array_push($result,$postDTO);
+        }
+        $serialize = $this->serializePosts($result);
+        $response = new Response();
+        $response->setContent(str_replace("\\","",$serialize));
+        return $response;
     }
 
     private function serializePosts($posts) {
