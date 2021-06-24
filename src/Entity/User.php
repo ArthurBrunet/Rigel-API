@@ -85,9 +85,7 @@ class User implements UserInterface
      */
     private $ideaBoxes;
 
-    public function __construct()
-    {
-        $this->ideaBoxes = new ArrayCollection();
+    /**
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user")
      */
     private $posts;
@@ -102,11 +100,17 @@ class User implements UserInterface
      */
     private $aperitifResponses;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $competence;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->emergencyAperitifs = new ArrayCollection();
         $this->aperitifResponses = new ArrayCollection();
+        $this->ideaBoxes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -301,6 +305,21 @@ class User implements UserInterface
         if (!$this->ideaBoxes->contains($ideaBox)) {
             $this->ideaBoxes[] = $ideaBox;
             $ideaBox->setIdUser($this);
+        }
+    }
+
+    public function removeIdeaBox(IdeaBox $ideaBox): self
+    {
+        if ($this->ideaBoxes->removeElement($ideaBox)) {
+            // set the owning side to null (unless already changed)
+            if ($ideaBox->getIdUser() === $this) {
+                $ideaBox->setIdUser(null);
+            }
+        }
+        return $this;
+    }
+
+     /**
      * @return Collection|Post[]
      */
     public function getPosts(): Collection
@@ -318,12 +337,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeIdeaBox(IdeaBox $ideaBox): self
-    {
-        if ($this->ideaBoxes->removeElement($ideaBox)) {
-            // set the owning side to null (unless already changed)
-            if ($ideaBox->getIdUser() === $this) {
-                $ideaBox->setIdUser(null);
     public function removePost(Post $post): self
     {
         if ($this->posts->removeElement($post)) {
@@ -392,6 +405,18 @@ class User implements UserInterface
                 $aperitifResponse->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCompetence(): ?string
+    {
+        return $this->competence;
+    }
+
+    public function setCompetence(?string $competence): self
+    {
+        $this->competence = $competence;
 
         return $this;
     }
