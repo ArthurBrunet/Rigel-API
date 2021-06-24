@@ -42,6 +42,11 @@ class Post
      */
     private $user;
 
+    /**
+     * @ORM\OneToOne(targetEntity=SonataMediaMedia::class, cascade={"persist", "remove"})
+     */
+    private $media;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class Post
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getMedia(): ?SonataMediaMedia
+    {
+        return $this->media;
+    }
+
+    public function setMedia(?SonataMediaMedia $media): self
+    {
+        $this->media = $media;
 
         return $this;
     }
