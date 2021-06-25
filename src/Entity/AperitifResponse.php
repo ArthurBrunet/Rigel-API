@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=AperitifResponseRepository::class)
+ * @OA\Schema()
  */
 class AperitifResponse
 {
@@ -14,21 +15,25 @@ class AperitifResponse
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @OA\Property(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="json")
+     * @OA\Property(type="object", description="Aperitif Response json format")
      */
     private $response = [];
 
     /**
      * @ORM\ManyToOne(targetEntity=EmergencyAperitif::class, inversedBy="AperitifResponse")
+     * @OA\Property(type="object", description="Aperitif Response emergency")
      */
     private $emergencyAperitif;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="aperitifResponses")
+     * @OA\Property(type="object", description="Aperitif Response users")
      */
     private $User;
 

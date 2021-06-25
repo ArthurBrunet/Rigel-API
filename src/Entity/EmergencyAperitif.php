@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=EmergencyAperitifRepository::class)
+ * @OA\Schema()
  */
 class EmergencyAperitif
 {
@@ -16,36 +17,43 @@ class EmergencyAperitif
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @OA\Property(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=45)
+     * @OA\Property(type="string", description="Emergency Aperitif meeting point max length 45")
      */
     private $meetingPoint;
 
     /**
      * @ORM\Column(type="datetime")
+     * @OA\Property(type="string", format="date-time", description="Emergency Aperitif date")
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @OA\Property(type="string", description="Emergency Aperitif title max lenght 255")
      */
     private $emergency;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @OA\Property(type="string", description="Emergency Aperitif description max lenght 255")
      */
     private $reason;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="emergencyAperitifs")
+     * @OA\Property(type="object", description="Emergency Aperitif user-infos")
      */
     private $User;
 
     /**
      * @ORM\OneToMany(targetEntity=AperitifResponse::class, mappedBy="emergencyAperitif")
+     * @OA\Property(type="object", description="Emergency Aperitif Apéritf Response")
      */
     private $AperitifResponse;
 

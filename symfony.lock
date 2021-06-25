@@ -165,6 +165,9 @@
     "nikic/php-parser": {
         "version": "v4.10.5"
     },
+    "php": {
+        "version": "7.4"
+    },
     "phpstan/phpdoc-parser": {
         "version": "0.5.4"
     },
@@ -490,6 +493,9 @@
     "symfony/security-http": {
         "version": "v4.4.25"
     },
+    "symfony/serializer": {
+        "version": "v4.4.25"
+    },
     "symfony/service-contracts": {
         "version": "v2.4.0"
     },
@@ -562,5 +568,8 @@
     },
     "twig/twig": {
         "version": "v3.3.2"
+    },
+    "zircote/swagger-php": {
+        "version": "3.2.2"
     }
 }

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TypeCompanyRepository::class)
+ * @OA\Schema()
  */
 class TypeCompany
 {
@@ -16,16 +17,19 @@ class TypeCompany
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @OA\Property(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @OA\Property(type="string", description="Type Compagny name max length 255")
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Company::class, mappedBy="type")
+     * @OA\Property(type="object", description="Type Company  Company list")
      */
     private $companies;
 

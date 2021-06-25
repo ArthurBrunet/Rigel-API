@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @OA\Schema()
  */
 class User implements UserInterface
 {
@@ -21,87 +22,104 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @OA\Property(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @OA\Property(type="string", description="User email")
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @OA\Property(type="object", description="User roles")
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @OA\Property(type="string", description="User password")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @OA\Property(type="string", description="User name max length 255")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @OA\Property(type="string", description="User firstname max length 255")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @OA\Property(type="string", description="User token max length 255")
      */
     private $token;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @OA\Property(type="string", description="User avatar max length 255")
      */
     private $avatar;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true)
+     * @OA\Property(type="string", description="User drink max length 45")
      */
     private $drink;
 
     /**
      * @ORM\Column(type="boolean")
+     * @OA\Property(type="boolean", description="User isEnable if user finish subscrib form")
      */
     private $isEnable;
 
     /**
      * @ORM\Column(type="boolean")
+     * @OA\Property(type="boolean", description="User isVisible if user is delete in front")
      */
     private $isVisible;
 
     /**
      * @ORM\OneToOne(targetEntity=IdeaBox::class, mappedBy="idUser", cascade={"persist", "remove"})
+     * @OA\Property(type="object", description="User Idea Box")
      */
     private $ideaBox;
 
     /**
      * @ORM\OneToMany(targetEntity=IdeaBox::class, mappedBy="idUser", orphanRemoval=true)
+     * @OA\Property(type="object", description="User Idea Box list")
      */
     private $ideaBoxes;
 
     /**
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user")
+     * @OA\Property(type="object", description="User Posts")
      */
     private $posts;
 
     /**
      * @ORM\OneToMany(targetEntity=EmergencyAperitif::class, mappedBy="User")
+     * @OA\Property(type="object", description="User Emergency Aperitif")
      */
     private $emergencyAperitifs;
 
     /**
      * @ORM\OneToMany(targetEntity=AperitifResponse::class, mappedBy="User")
+     * @OA\Property(type="object", description="User Emergency Aperitif Responses")
      */
     private $aperitifResponses;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @OA\Property(type="string", description="User compétence", nullable=true)
      */
     private $competence;
 

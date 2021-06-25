@@ -1,0 +1,173 @@
+openapi: 3.0.0
+info:
+  title: 'Sirius API'
+  version: '0.1'
+paths:
+  /posts:
+    get:
+      operationId: d96ad38cd58e162243f5f952a77831dd
+      responses:
+        '200':
+          description: 'Liste des postes'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+  /api/resource.json:
+    get:
+      responses:
+        '200':
+          description: 'An example resource'
+components:
+  schemas:
+    AperitifResponse:
+      properties:
+        id:
+          type: integer
+        response:
+          description: 'Aperitif Response json format'
+          type: object
+        emergencyAperitif:
+          description: 'Aperitif Response emergency'
+          type: object
+        User:
+          description: 'Aperitif Response users'
+          type: object
+      type: object
+    Company:
+      properties:
+        id:
+          type: integer
+        name:
+          description: 'Company name max length 255'
+          type: string
+        description:
+          nullable: true
+          description: 'Company description  max length 255'
+          type: string
+        type:
+          nullable: true
+          description: 'Company description  max length 255'
+          type: string
+      type: object
+    EmergencyAperitif:
+      properties:
+        id:
+          type: integer
+        meetingPoint:
+          description: 'Emergency Aperitif meeting point max length 45'
+          type: string
+        date:
+          description: 'Emergency Aperitif date'
+          type: string
+          format: date-time
+        emergency:
+          description: 'Emergency Aperitif title max lenght 255'
+          type: string
+        reason:
+          description: 'Emergency Aperitif description max lenght 255'
+          type: string
+        User:
+          description: 'Emergency Aperitif user-infos'
+          type: object
+        AperitifResponse:
+          description: 'Emergency Aperitif Apéritf Response'
+          type: object
+      type: object
+    IdeaBox:
+      properties:
+        id:
+          type: integer
+      type: object
+    Post:
+      properties:
+        id:
+          type: integer
+        title:
+          description: 'Post title max length 50'
+          type: string
+        banner:
+          nullable: true
+          description: 'Post banner'
+          type: string
+        content:
+          description: 'Post content max lenght 255'
+          type: string
+        datePost:
+          description: 'Post date publication'
+          type: string
+          format: date-time
+        user:
+          description: 'Post user-infos'
+          type: object
+        media:
+          description: 'Post medias'
+          type: object
+      type: object
+    TypeCompany:
+      properties:
+        id:
+          type: integer
+        name:
+          description: 'Type Compagny name max length 255'
+          type: string
+        companies:
+          description: 'Type Company  Company list'
+          type: object
+      type: object
+    User:
+      properties:
+        id:
+          type: integer
+        email:
+          description: 'User email'
+          type: string
+        roles:
+          description: 'User roles'
+          type: object
+        password:
+          description: 'User password'
+          type: string
+        name:
+          description: 'User name max length 255'
+          type: string
+        firstname:
+          description: 'User firstname max length 255'
+          type: string
+        token:
+          description: 'User token max length 255'
+          type: string
+        avatar:
+          description: 'User avatar max length 255'
+          type: string
+        drink:
+          description: 'User drink max length 45'
+          type: string
+        isEnable:
+          description: 'User isEnable if user finish subscrib form'
+          type: boolean
+        isVisible:
+          description: 'User isVisible if user is delete in front'
+          type: boolean
+        ideaBox:
+          description: 'User Idea Box'
+          type: object
+        ideaBoxes:
+          description: 'User Idea Box list'
+          type: object
+        posts:
+          description: 'User Posts'
+          type: object
+        emergencyAperitifs:
+          description: 'User Emergency Aperitif'
+          type: object
+        aperitifResponses:
+          description: 'User Emergency Aperitif Responses'
+          type: object
+        competence:
+          nullable: true
+          description: 'User compétence'
+          type: string
+      type: object

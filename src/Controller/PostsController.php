@@ -17,6 +17,13 @@ class PostsController extends AbstractController
 {
     /**
      * @Route("/posts", name="posts")
+     *
+     * @OA\Get(
+     *     path="/posts",
+     *     @OA\Response(response="200",
+     *                  description="Liste des postes",
+     *                  @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Post")))
+     * )
      */
     public function getAllPosts(Request $request,PostRepository $postRepository)
     {

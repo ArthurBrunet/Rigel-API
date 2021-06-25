@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=IdeaBoxRepository::class)
+ * @OA\Schema()
  */
 class IdeaBox
 {
@@ -14,6 +15,7 @@ class IdeaBox
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @OA\Property(type="integer")
      */
     private $id;
 

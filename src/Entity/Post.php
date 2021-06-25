@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
+ * @OA\Schema()
  */
 class Post
 {
@@ -14,36 +15,43 @@ class Post
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @OA\Property(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @OA\Property(type="string", description="Post title max length 50")
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @OA\Property(type="string", description="Post banner", nullable=true)
      */
     private $banner;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @OA\Property(type="string", description="Post content max lenght 255")
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime")
+     * @OA\Property(type="string", format="date-time", description="Post date publication")
      */
     private $datePost;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="posts")
+     * @OA\Property(type="object", description="Post user-infos")
      */
     private $user;
 
     /**
      * @ORM\OneToOne(targetEntity=SonataMediaMedia::class, cascade={"persist", "remove"})
+     *  @OA\Property(type="object", description="Post medias")
      */
     private $media;
 
