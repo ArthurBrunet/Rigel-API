@@ -51,7 +51,7 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @PasswordRequirements(
      *     minLength=8,
      *     requireNumbers=true,
@@ -64,12 +64,12 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstname;
 
@@ -114,7 +114,7 @@ class User implements UserInterface
     private $aperitifResponses;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(
      *     message="Merci de renseigner votre numéro de téléphone.",
      *     groups={"Register"}
