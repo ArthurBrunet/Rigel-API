@@ -6,6 +6,9 @@ use App\Entity\User;
 use App\Form\RegistrationType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\SerializerBuilder;
+use JMS\SerializerBundle\JMSSerializerBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,8 +78,12 @@ class UserController extends AbstractController
     /**
      * @Route("/user/get/{email}", name="user_registration", methods={"GET"})
      */
-    public function getUserByEmail($email, UserRepository $userRepository)
+    public function getUserByEmail($email, UserRepository $userRepository): JsonResponse
     {
-
+        // Méthode pour récupérer un utilisateur via son email
+        $user = $userRepository->findOneBy(['email' => $email]);
+        $serialize = SerializerBuilder::create()->build();
+        $jsonContent = $serialize->serialize($user, 'json', SerializationContext::create());
+        return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
     }
 }
