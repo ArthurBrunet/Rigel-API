@@ -7,11 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -26,6 +29,18 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(
+     *     message="Merci de renseigner votre email.",
+     *     groups={"Register"}
+     *     )
+     *
+     * @Assert\Email(
+     *     message="Veuillez renseigner un mail valide.",
+     *     groups={"Register"}
+     *     )
+     *
+     * @Assert\Unique
+     *
      */
     private $email;
 
@@ -36,17 +51,25 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
+     * @PasswordRequirements(
+     *     minLength=8,
+     *     requireNumbers=true,
+     *     requireLetters=true,
+     *     requireCaseDiff=true,
+     *     requireSpecialCharacter=true,
+     *     groups={"Register"}
+     * )
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstname;
 
@@ -102,6 +125,26 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(
+     *     message="Merci de renseigner votre numéro de téléphone.",
+     *     groups={"Register"}
+     *     )
+     *
+     * @Assert\Length(
+     *     min="10",
+     *     minMessage="Veuillez renseigner un numéro de téléphone correct.",
+     *     groups={"Register"}
+     *     )
+     * @Assert\Length(
+     *     max="10",
+     *     maxMessage="Veuillez renseigner un numéro de téléphone correct.",
+     *     groups={"Register"}
+     *     )
+     */
+    private $phoneNumber;
+  
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $competence;
 
@@ -136,12 +179,18 @@ class User implements UserInterface
      */
     public function prePersist()
     {
-//        if (empty($this->getRoles())) {
-//        $this->setRoles(['ROLE_USER']);
-//        }
-//        if (empty($this->getToken())) {
-        $this->setToken(rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '='));
-//        }
+        if (empty($this->getRoles())) {
+            $this->setRoles(['ROLE_USER']);
+        }
+        if (empty($this->getToken())) {
+            $this->setToken(rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '='));
+        }
+        if (empty($this->getIsEnable())) {
+            $this->setIsEnable(true);
+        }
+        if (empty($this->getIsVisible())) {
+            $this->setIsVisible(true);
+        }
     }
 
     /**
@@ -176,7 +225,7 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -409,6 +458,17 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+        return $this;
+    }
+  
     public function getCompetence(): ?string
     {
         return $this->competence;
