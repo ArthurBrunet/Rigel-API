@@ -4,12 +4,16 @@ namespace App\Entity;
 
 use App\Repository\AperitifResponseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=AperitifResponseRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class AperitifResponse
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

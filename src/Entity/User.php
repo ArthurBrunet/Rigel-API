@@ -148,6 +148,11 @@ class User implements UserInterface
      */
     private $competence;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="users")
+     */
+    private $company;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -477,6 +482,18 @@ class User implements UserInterface
     public function setCompetence(?string $competence): self
     {
         $this->competence = $competence;
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
 
         return $this;
     }
