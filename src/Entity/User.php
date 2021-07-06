@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -39,7 +40,6 @@ class User implements UserInterface
      *     groups={"Register"}
      *     )
      *
-     * @Assert\Unique
      *
      */
     private $email;
@@ -548,5 +548,10 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
     }
 }
