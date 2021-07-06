@@ -24,7 +24,7 @@ class CompanyFixtures extends AbstractFixtures
         for ($i = 0; $i < self::NUMBER_USER; $i++) {
             $data = [
                 'name' => $this->faker->company,
-                'type' => $this->getReference($this->faker->randomElement(array_keys(CompanyTypeFixtures::COMPANY_ACTIVITY))),
+//                'type' => $this->getReference($this->faker->randomElement(array_keys(CompanyTypeFixtures::COMPANY_ACTIVITY))),
                 'description' => $this->faker->text,
             ];
 

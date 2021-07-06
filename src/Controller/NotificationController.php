@@ -18,7 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class NotificationController
  * @package App\Controller
- * // * @Route ("/api")
  */
 class NotificationController extends AbstractController
 {
@@ -45,14 +44,18 @@ class NotificationController extends AbstractController
         $meetingPoint = $datas['meetingPoint'];
         $date = $datas['date'];
         $email = $datas['email'];
-        $user = $userRepository->findOneBy(['email' => $email]);
+        $emergency = $datas['emergency'];
 
+        $user = $userRepository->findOneBy(['email' => $email]);
+        $interval = NULL;
         $dateNow = new \DateTime("now");
-        $aperitif = $emergencyAperitifRepository->findOneBy(['user' => $user], ['createdAt' => 'ASC']);
-        $interval = date_diff($dateNow, $aperitif['createdAt'])->format('%R%');
+        $aperitif = $emergencyAperitifRepository->findOneBy(['User' => $user], ['createdAt' => 'DESC']);
+        if ($aperitif) {
+            $interval = date_diff($dateNow, $aperitif->getCreatedAt())->format('%R%');
+        }
 
         if ($user) {
-            if ($interval <= 1) {
+            if ($interval === NULL || $interval >= 1) {
                 $usersCompany = $userRepository->getUsersOfCompanyById($companies);
                 foreach ($usersCompany as $value) {
                     $email = (new Email())
@@ -67,6 +70,7 @@ class NotificationController extends AbstractController
                 $emergencyAperitif->setDate($date);
                 $emergencyAperitif->setMeetingPoint($meetingPoint);
                 $emergencyAperitif->setReason($reason);
+                $emergencyAperitif->setEmergency($emergency);
                 $emergencyAperitif->setUser($user);
                 $em->persist($emergencyAperitif);
                 $em->flush();
