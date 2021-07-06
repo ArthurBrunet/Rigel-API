@@ -64,4 +64,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
     */
+
+    public function getUsersOfCompanyById($id)
+    {
+
+        $qb = $this->createQueryBuilder("u")
+            ->leftJoin('u.company', 'c');
+        $qb->select('u.email')
+            ->andWhere('c.id = :val')
+            ->setParameter('val', $id);
+
+        $query = $qb->getQuery();
+        return $query->execute();
+
+    }
 }
