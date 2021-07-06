@@ -47,4 +47,18 @@ class MessageRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getMessagesOfCanalById($id)
+    {
+        $qb = $this->createQueryBuilder("m")
+            ->leftJoin('m.canal', 'c')
+            ->leftJoin('m.created_by', 'u')
+            ->select("m.text","u.name","u.firstname")
+            ->andWhere('c.id = :val')
+            ->setParameter('val', $id);
+
+        $query = $qb->getQuery();
+        return $query->execute();
+
+    }
 }
