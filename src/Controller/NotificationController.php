@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\AperitifResponse;
 use App\Entity\EmergencyAperitif;
+use App\Repository\AperitifResponseRepository;
 use App\Repository\EmergencyAperitifRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -79,6 +81,35 @@ class NotificationController extends AbstractController
             } else {
                 return new JsonResponse('User already use the emergency for today', Response::HTTP_BAD_REQUEST);
             }
+        } else {
+            return new JsonResponse('User not found', Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    /**
+     * @Route("/notification/response", name="notification_response", methods={"POST"})
+     */
+    public function notificationResponse(EntityManagerInterface $em, Request $request, UserRepository $userRepository, AperitifResponseRepository $aperitifResponseRepository, EmergencyAperitifRepository $emergencyAperitifRepository): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $email = $data['email'];
+        $response = $data['response'];
+        $aperitif = $data['aperitif'];
+        $user = $userRepository->findOneBy(['email' => $email]);
+        $aperitif_alert = $emergencyAperitifRepository->findOneBy(['id' => $aperitif]);
+        if ($user) {
+                if ($aperitif_alert) {
+                    $aperitifResponse = new AperitifResponse();
+                    $aperitifResponse->setEmergencyAperitif($aperitif_alert);
+                    $aperitifResponse->setResponse([$response]);
+                    $aperitifResponse->setUser($user);
+                    $em->persist($aperitifResponse);
+                    $em->flush();
+                    return new JsonResponse('Response send', Response::HTTP_OK);
+
+                } else {
+                    return new JsonResponse('Alert not found', Response::HTTP_BAD_REQUEST);
+                }
         } else {
             return new JsonResponse('User not found', Response::HTTP_BAD_REQUEST);
         }
