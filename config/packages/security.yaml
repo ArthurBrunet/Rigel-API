@@ -11,10 +11,11 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        user:
             entity:
                 class: App\Entity\User
                 property: email
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -48,7 +49,7 @@ security:
             lexik_jwt: ~
         main:
             anonymous: lazy
-            provider: app_user_provider
+            provider: user
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
