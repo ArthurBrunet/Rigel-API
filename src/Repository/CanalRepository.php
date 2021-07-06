@@ -47,4 +47,18 @@ class CanalRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getCanalsOfUserById($id)
+    {
+
+        $qb = $this->createQueryBuilder("c")
+            ->leftJoin('c.user', 'u')
+            ->select("c.id","c.name")
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $id);
+
+        $query = $qb->getQuery();
+        return $query->execute();
+
+    }
 }
