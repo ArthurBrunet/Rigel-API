@@ -56,7 +56,7 @@ class MessageController extends AbstractController
         $verif = $this->verifCanalAccess($request,$datas['canal'],$canalRepository,$userRepository);
         if ($verif){
             $message = new Message();
-            $form = $this->createForm(MessageForm::class, $message);
+            /*$form = $this->createForm(MessageForm::class, $message);
             $form->submit($datas);
             $validate = $validator->validate($message);
             // Vérifie si il n'y a pas d'erreurs en fonction des assert saisies dans l'entité
@@ -64,7 +64,10 @@ class MessageController extends AbstractController
                 foreach ($validate as $error) {
                     return new JsonResponse($error->getMessage(), Response::HTTP_BAD_REQUEST);
                 }
-            }
+            }*/
+            $canal = $canalRepository->findOneBy(['name' => $datas['canal']]);
+            $message->setCanal($canal);
+            $message->setText($datas['message']);
             $message->setCreatedBy($user);
             $em->persist($message);
             $em->flush();
@@ -82,11 +85,21 @@ class MessageController extends AbstractController
     public function getMessage($idCanal, Request $request ,CanalRepository $canalRepository, UserRepository $userRepository, MessageRepository  $messageRepository): Response
     {
         //Récupération de la data dans le JSON
+        $response = new JsonResponse();
         $canal = $canalRepository->findOneBy(['id' => $idCanal]);
-        $verif = $this->verifCanalAccess($request,$canal->getName(),$canalRepository,$userRepository);
-        var_dump($verif);
-        $messages = $messageRepository->getMessagesOfCanalById($canal->getId());
-
-        return new JsonResponse(json_decode($messages));
+        if ($canal){
+            $verif = $this->verifCanalAccess($request,$canal->getName(),$canalRepository,$userRepository);
+        }else{
+            $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+            return $response;
+        }
+        if ($verif) {
+            $result = $messageRepository->getMessagesOfCanalById($canal->getId());
+            $response->setData($result);
+            $response->setStatusCode(Response::HTTP_OK);
+        }else{
+            $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+        }
+        return $response;
     }
 }

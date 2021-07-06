@@ -35,6 +35,21 @@ class UserFixtures extends Fixture
 
         $password = $this->encoder->encodePassword($user1,"admin");
 
+        $user = new User();
+        $user->setEmail("user@admin.com");
+        $user->setFirstname("user");
+        $user->setName("userName");
+        $user->setIsEnable(1);
+        $user->setIsVisible(1);
+        $user->setRoles((array)"ROLE_USER");
+        $user->setPhoneNumber("0637610414");
+
+        $password1 = $this->encoder->encodePassword($user,"user123");
+
+        $user->setPassword($password1);
+        $manager->persist($user);
+        $manager->flush();
+
         $user1->setPassword($password);
         $manager->persist($user1);
         $manager->persist($canal1);
