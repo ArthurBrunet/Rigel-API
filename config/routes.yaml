@@ -1,8 +1,5 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-api:
-  resource: "../src/Controller"
-  type: annotation
-  prefix: api
-  name_prefix: 'api_'
+api_login_check:
+  path: /api/login_check

@@ -46,6 +46,10 @@ Launch Symfony with the following command :
 
     php -S localhost:8000 -t public
 
+Create an User Admin:
+
+    php bin/console create:admin:user
+
 ## Complementary Informations :
 Dependencies/Bundles used :
 
