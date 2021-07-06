@@ -83,4 +83,12 @@ class NotificationController extends AbstractController
             return new JsonResponse('User not found', Response::HTTP_BAD_REQUEST);
         }
     }
+
+    /**
+     * @Route("/notification/response", name="notification_response", methods={"POST"})
+     */
+    public function notificationResponse(EntityManagerInterface $em, Request $request) {
+        $datas = json_decode($request->getContent(), true);
+
+    }
 }
