@@ -2,52 +2,52 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Company;
 use App\Entity\TypeCompany;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker;
 
-class CompanyTypeFixtures extends Fixture
+class CompanyTypeFixtures extends AbstractFixtures
 {
 
-    const  ARCHITECTURE = 'Architecture';
-    const INFORMATICS = 'Informatics';
-    const MARKETING = 'Marketing';
+    const COMPANY_ACTIVITY_ARCHITECTURE = 'company_activity_architecture';
+    const COMPANY_ACTIVITY_INFORMATICS = 'company_activity_informatics';
+    const COMPANY_ACTIVITY_MARKETING = 'company_activity_marketing';
 
-    const TYPES_COMPANY = [
-        self::ARCHITECTURE => [
-            'name' => 'Architecture'
+    const COMPANY_ACTIVITY = [
+        self::COMPANY_ACTIVITY_ARCHITECTURE => [
+            'name' => 'Architecture',
         ],
-        self::INFORMATICS => [
-            'name' => 'Informatics'
+        self::COMPANY_ACTIVITY_INFORMATICS => [
+            'name' => 'Informatics',
         ],
-        self::MARKETING => [
-            'name' => 'Marketing'
-        ]
+        self::COMPANY_ACTIVITY_MARKETING => [
+            'name' => 'Marketing',
+        ],
     ];
 
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        $this->loadTypeCompany($manager);
-        $manager->flush();
+        $this->loadCompanyActivity($manager);
 
+        $manager->flush();
     }
 
     /**
      * @param ObjectManager $manager
      */
-    public function loadTypeCompany(ObjectManager $manager)
+    public function loadCompanyActivity(ObjectManager $manager)
     {
-        foreach (self::TYPES_COMPANY as $id => $data) {
-            $typeCompany = new TypeCompany();
-            $typeCompany
-                ->setName($data['name']);
-            $this->setReference($id, $typeCompany);
-            $manager->persist($typeCompany);
-        }
+        foreach (self::COMPANY_ACTIVITY as $id => $data) {
+            $companyActivity = new TypeCompany();
+            $companyActivity
+                ->setName($data['name'])
+            ;
 
-        $manager->flush();
+            $this->setReference($id, $companyActivity);
+
+            $manager->persist($companyActivity);
+        }
     }
 }
