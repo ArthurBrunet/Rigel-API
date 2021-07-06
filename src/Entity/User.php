@@ -149,10 +149,6 @@ class User implements UserInterface
     private $competence;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="users")
-     */
-    private $company;
-     /**
      * @ORM\OneToMany(targetEntity=Message::class, mappedBy="created_by")
      */
     private $messages;
@@ -497,16 +493,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getCompany(): ?Company
-    {
-        return $this->company;
-    }
-
-    public function setCompany(?Company $company): self
-    {
-        $this->company = $company;
-    }
-  
     /**
      * @return Collection|Message[]
      */

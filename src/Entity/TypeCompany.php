@@ -6,17 +6,12 @@ use App\Repository\TypeCompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=TypeCompanyRepository::class)
- * @ORM\HasLifecycleCallbacks()
  */
 class TypeCompany
 {
-    use TimestampableEntity;
-
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

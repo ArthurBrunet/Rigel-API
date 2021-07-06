@@ -28,10 +28,11 @@
         "symfony/mailer": "4.4.*",
         "symfony/proxy-manager-bridge": "4.4.*",
         "symfony/security-bundle": "4.4.*",
-        "symfony/serializer": "4.4.*",
         "symfony/twig-bundle": "4.4.*",
+        "symfony/serializer": "4.4.*",
         "symfony/validator": "4.4.*",
-        "symfony/yaml": "4.4.*"
+        "symfony/yaml": "4.4.*",
+      "ext-json": "*"
     },
     "config": {
         "preferred-install": {
@@ -80,8 +81,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "fzaninotto/faker": "^1.9",
-        "symfony/maker-bundle": "^1.32",
+        "symfony/maker-bundle": "^1.31",
         "symfony/web-server-bundle": "4.4.*"
     }
 }

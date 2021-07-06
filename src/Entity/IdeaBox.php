@@ -4,16 +4,12 @@ namespace App\Entity;
 
 use App\Repository\IdeaBoxRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=IdeaBoxRepository::class)
- * @ORM\HasLifecycleCallbacks()
  */
 class IdeaBox
 {
-    use TimestampableEntity;
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
