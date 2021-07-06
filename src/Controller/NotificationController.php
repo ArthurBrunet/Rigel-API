@@ -49,9 +49,10 @@ class NotificationController extends AbstractController
 
         $dateNow = new \DateTime("now");
         $aperitif = $emergencyAperitifRepository->findOneBy(['user' => $user], ['createdAt' => 'ASC']);
+        $interval = date_diff($dateNow, $aperitif['createdAt'])->format('%R%');
 
         if ($user) {
-            if ($dateNow > $aperitif) {
+            if ($interval <= 1) {
                 $usersCompany = $userRepository->getUsersOfCompanyById($companies);
                 foreach ($usersCompany as $value) {
                     $email = (new Email())
