@@ -8,13 +8,12 @@ use App\Repository\AperitifResponseRepository;
 use App\Repository\EmergencyAperitifRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -60,9 +59,8 @@ class NotificationController extends AbstractController
             if ($interval === NULL || $interval >= 1) {
                 $usersCompany = $userRepository->getUsersOfCompanyById($companies);
                 foreach ($usersCompany as $value) {
-                    $email = (new Email())
+                    $email = (new TemplatedEmail())
                         ->from('sirius@mailhog.local')
-//                ->from('turpinpaulpro@gmail.com')
                         ->to($value)
                         ->subject($user->getUsername() . 'vous invite sur sa platforme!')
                         ->htmlTemplate('mail/emergency.html.twig');
