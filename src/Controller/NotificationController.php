@@ -8,6 +8,7 @@ use App\Repository\AperitifResponseRepository;
 use App\Repository\EmergencyAperitifRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,16 +24,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class NotificationController extends AbstractController
 {
-    /**
-     * @Route("/notification", name="notification")
-     */
-    public function index(): Response
-    {
-        return $this->render('mail/index.html.twig', [
-            'controller_name' => 'MailController',
-        ]);
-    }
-
     /**
      * @Route("/notification/aperitif", name="notification_aperitif", methods={"POST"})
      */
@@ -58,17 +49,19 @@ class NotificationController extends AbstractController
 
         if ($user) {
             if ($interval === NULL || $interval >= 1) {
+                $emergencyAperitif = new EmergencyAperitif();
                 $usersCompany = $userRepository->getUsersOfCompanyById($companies);
                 foreach ($usersCompany as $value) {
-                    $email = (new Email())
+                    $email = (new TemplatedEmail())
                         ->from('sirius@mailhog.local')
 //                ->from('turpinpaulpro@gmail.com')
                         ->to($value)
                         ->subject($user->getUsername() . 'vous invite sur sa platforme!')
-                        ->htmlTemplate('mail/emergency.html.twig');
+                        ->htmlTemplate('notification/index.html.twig')
+                        ->context(["server_url" => $_ENV['SERVER'], "firstname" => $user->getFirstname(), "name" => $user->getName(), "lieu" => $meetingPoint, "date" => $date, "raison" => $reason, "" => $emergencyAperitif->getId()]);
+
                     $mailer->send($email);
                 }
-                $emergencyAperitif = new EmergencyAperitif();
                 $emergencyAperitif->setDate($date);
                 $emergencyAperitif->setMeetingPoint($meetingPoint);
                 $emergencyAperitif->setReason($reason);
@@ -98,18 +91,18 @@ class NotificationController extends AbstractController
         $user = $userRepository->findOneBy(['email' => $email]);
         $aperitif_alert = $emergencyAperitifRepository->findOneBy(['id' => $aperitif]);
         if ($user) {
-                if ($aperitif_alert) {
-                    $aperitifResponse = new AperitifResponse();
-                    $aperitifResponse->setEmergencyAperitif($aperitif_alert);
-                    $aperitifResponse->setResponse([$response]);
-                    $aperitifResponse->setUser($user);
-                    $em->persist($aperitifResponse);
-                    $em->flush();
-                    return new JsonResponse('Response send', Response::HTTP_OK);
+            if ($aperitif_alert) {
+                $aperitifResponse = new AperitifResponse();
+                $aperitifResponse->setEmergencyAperitif($aperitif_alert);
+                $aperitifResponse->setResponse([$response]);
+                $aperitifResponse->setUser($user);
+                $em->persist($aperitifResponse);
+                $em->flush();
+                return new JsonResponse('Response send', Response::HTTP_OK);
 
-                } else {
-                    return new JsonResponse('Alert not found', Response::HTTP_BAD_REQUEST);
-                }
+            } else {
+                return new JsonResponse('Alert not found', Response::HTTP_BAD_REQUEST);
+            }
         } else {
             return new JsonResponse('User not found', Response::HTTP_BAD_REQUEST);
         }
