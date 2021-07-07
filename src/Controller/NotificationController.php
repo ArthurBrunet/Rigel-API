@@ -14,8 +14,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -54,7 +52,6 @@ class NotificationController extends AbstractController
                 foreach ($usersCompany as $value) {
                     $email = (new TemplatedEmail())
                         ->from('sirius@mailhog.local')
-//                ->from('turpinpaulpro@gmail.com')
                         ->to($value)
                         ->subject($user->getUsername() . 'vous invite sur sa platforme!')
                         ->htmlTemplate('notification/index.html.twig')
