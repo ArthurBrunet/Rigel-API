@@ -27,8 +27,8 @@ class NotificationController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('notification/index.html.twig', [
-            'controller_name' => 'NotificationController',
+        return $this->render('mail/index.html.twig', [
+            'controller_name' => 'MailController',
         ]);
     }
 
