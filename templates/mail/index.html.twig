@@ -4,8 +4,15 @@
 
 {% block body %}
     <style>
+        h1 {
+            font-family: Rockwell, sans-serif;
+        }
         body {
             font-family: Arial, serif;
+        }
+
+        p {
+            text-align: justify;
         }
 
         .center {
@@ -20,15 +27,15 @@
             border-radius: 10px;
         }
 
-        /*svg {*/
-        /*    width: 100px;*/
-        /*}*/
+        svg {
+            width: 100px;
+        }
 
 
         .container {
             display: grid;
             grid-template-columns: 0.5fr 2.1fr 0.4fr;
-            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-rows: 0.4fr 2.2fr 0.4fr;
             gap: 0px 0px;
             grid-auto-flow: row;
         }
@@ -51,6 +58,8 @@
 
         .nom {
             grid-area: 1 / 2 / 2 / 3;
+            color: #20A3A7;
+            text-align: center;
         }
 
         .text {
@@ -68,6 +77,8 @@
         <div class="banniere"></div>
         <div class="footer"></div>
         <div class="logo">
+        </div>
+        <div class=" nom">
             <svg id="a8cd8432-0ec1-45be-8883-5d69ea8f90b6" data-name="a5730932-3c90-4e7e-b0ad-7bc8de4fb927"
                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.56655 815.32024">
                 <defs>
@@ -101,27 +112,30 @@
                       d="M205.37161,491.135c2.46311-3.32233,6.37964-4.67078,9.841-3.3693,2.06219.77533,3.35781,2.40152,2.26324,4.53324-1.569,3.05554-3.656,5.84057-5.369,8.82879a10.88,10.88,0,0,0-1.64474,4.34076,78.95588,78.95588,0,0,0-.03479,10.14942c.13968,2.47845-.82749,3.35632-3.1619,3.08362a6.49,6.49,0,0,0-1.1597.015c-4.50277.28894-4.52331.29053-4.57974-4.40845-.03793-3.1604-.00723-6.32159-.00723-9.52307,5.65912.46234,8.69122-1.255,9.64157-5.05743C212.0347,496.22907,210.21609,493.46241,205.37161,491.135Z"
                       transform="translate(0.00096 0.00008)"/>
             </svg>
-        </div>
-        <div class=" nom">
+
             <h1>Sirius</h1>
 
         </div>
         <div class="text">
             <h2 class=" center bandeau">Bonjour !</h2>
-            <p class="">Sirius vous invite sur sa plateforme, disponible sur ce lien :
-                {# <a href="{{ server_url }}">{{ server_url }}{{ token }}</a> #}
+            <p class="">Sirius vous invite sur sa plateforme, disponible sur ce lien : <br>
+                 <a href="{{ server_url }}">{{ server_url }}{{ token }}</a>
             </p>
+            <h3 class="bandeau">Sirius, qu'est-ce que c'est?</h3>
             <p><span>Sirius</span> est une plateforme qui a pour objectif d'être votre happiness officer en ligne.<br/>
                 Ici, vous pouvez accéder aux dernières publications d'Orion que ce soit sous forme de posts ou par
-                messages dans
-                les chats qui sont mis à votre disposition.<br/></p>
+                messages dans les chats qui sont mis à votre disposition.<br/></p>
+            <h3 class="bandeau">Et quoi d'autre?</h3>
             <p>
                 Vous pouvez également consulter l'annuaire des entreprises partenaires pour trouver un contact ou encore
-                déposer une ou plusieurs idées dans la boite à idées<br/>
+                déposer une ou plusieurs idées dans la boite à idées.<br/>
                 Enfin, si vous souhaitez retrouver vos collègues ou des membres d'autres entreprises présentes au sein
-                des locaux d'Orion,<br/>
-                vous pouvez déclencher l'alerte apéro (via l'icône en bas à droite) pour les inviter.
+                des locaux d'Orion, vous pouvez déclencher l'alerte apéro pour les
+                inviter.
             </p>
+            <br>
+            <br>
+            <br>
             <p class="">Cordialement,</p>
             <p class="">L'équipe Sirius.</p></div>
         <div class="text-footer"></div>
