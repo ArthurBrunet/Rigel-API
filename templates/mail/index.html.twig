@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MailController!{% endblock %}
+
+{% block body %}
+    <div>
+        <h1>Bonjour !</h1>
+
+        <p>Sirius vous invite sur sa plateforme, disponible sur ce lien : <a href="{{ server_url }}">{{ server_url }}{{ token }}</a></p>
+
+        <p>Cordialement,</p>
+        <p>L'équipe Sirius.</p>
+    </div>
+{% endblock %}
