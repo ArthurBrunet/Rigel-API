@@ -31,6 +31,36 @@ services:
     # please note that last definitions always *replace* previous ones
     admin.post:
         class: App\Admin\PostsAdmin
-        arguments: [~,App\Entity\Post,~]
+        arguments: [~ ,App\Entity\Post, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Posts, group: 'Tables' }
+            - { name: sonata.admin, manager_type: orm, label: Posts, group: 'Communication' }
+    admin.ideabox:
+        class: App\Admin\IdeaBoxAdmin
+        arguments: [~ ,App\Entity\IdeaBox, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Boite à idées, group: 'Autres' }
+    admin.users:
+        class: App\Admin\UserAdmin
+        arguments: [~ ,App\Entity\User, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Utilisateurs, group: 'Autres' }
+    admin.canal:
+        class: App\Admin\CanalAdmin
+        arguments: [~ ,App\Entity\Canal, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Canal, group: 'Communication' }
+    admin.message:
+        class: App\Admin\MessageAdmin
+        arguments: [~ ,App\Entity\Message, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Messages, group: 'Communication' }
+    admin.company:
+        class: App\Admin\CompanyAdmin
+        arguments: [~ ,App\Entity\Company, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Entreprise, group: 'Entreprise' }
+    admin.typecompany:
+        class: App\Admin\TypeCompagnyAdmin
+        arguments: [~ ,App\Entity\TypeCompany, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Type d'entreprise, group: 'Entreprise' }
