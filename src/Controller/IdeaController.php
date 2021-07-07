@@ -19,7 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class IdeaController extends AbstractController
 {
-
     /**
      * @Route("/idea/create", name="mail", methods={"POST"})
      */
