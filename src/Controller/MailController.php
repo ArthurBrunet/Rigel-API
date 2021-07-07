@@ -17,7 +17,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 class MailController extends AbstractController
 {
     /**
-     * @Route("/mail/createUser", name="mail", methods={"POST"})
+     * @Route("/api/mail/createUser", name="mail", methods={"POST"})
      */
     public function createUser(Request $request, EntityManagerInterface $em, UserRepository $userRepository, MailerInterface $mailer): Response
     {

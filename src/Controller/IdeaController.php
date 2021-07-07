@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class IdeaController extends AbstractController
 {
     /**
-     * @Route("/idea/create", name="mail", methods={"POST"})
+     * @Route("/api/idea/create", name="mail", methods={"POST"})
      */
     public function sendIdeaBox(Request $request, EntityManagerInterface $em, UserRepository $userRepository, MailerInterface $mailer): Response
     {

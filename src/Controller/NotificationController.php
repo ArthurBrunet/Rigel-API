@@ -34,7 +34,7 @@ class NotificationController extends AbstractController
     }
 
     /**
-     * @Route("/notification/aperitif", name="notification_aperitif", methods={"POST"})
+     * @Route("/api/notification/aperitif", name="notification_aperitif", methods={"POST"})
      */
     public function aperitifAlert(EntityManagerInterface $em, Request $request, UserRepository $userRepository, MailerInterface $mailer, EmergencyAperitifRepository $emergencyAperitifRepository): JsonResponse
     {
