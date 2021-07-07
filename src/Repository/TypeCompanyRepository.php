@@ -47,4 +47,15 @@ class TypeCompanyRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getName()
+    {
+
+        $qb = $this->createQueryBuilder("t")
+            ->select('t.name');
+
+        $query = $qb->getQuery();
+        return $query->execute();
+
+    }
 }
