@@ -76,7 +76,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/get/{email}", name="user_registration", methods={"GET"})
+     * @Route("/user/get/{email}", name="user_get_by_mail", methods={"GET"})
      */
     public function getUserByEmail($email, UserRepository $userRepository): JsonResponse
     {
@@ -85,5 +85,20 @@ class UserController extends AbstractController
         $serialize = SerializerBuilder::create()->build();
         $jsonContent = $serialize->serialize($user, 'json', SerializationContext::create());
         return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
+    }
+
+    /**
+     * @Route("/user/getUserFromToken/{token}", name="getUserFromToken", methods={"GET"})
+     */
+    public function getUserFromToken($token, UserRepository $userRepository): JsonResponse
+    {
+        $user = $userRepository->findOneBy(['token' => $token]);
+        if ($user) {
+            $serialize = SerializerBuilder::create()->build();
+            $jsonContent = $serialize->serialize($user, 'json', SerializationContext::create());
+            return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
+        }else {
+            return new JsonResponse(json_encode("user dont exist"), Response::HTTP_OK, [], true);
+        }
     }
 }
