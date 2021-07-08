@@ -53,8 +53,10 @@ class MessageRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder("m")
             ->leftJoin('m.canal', 'c')
             ->leftJoin('m.created_by', 'u')
-            ->select("m.text","u.name","u.firstname")
+            ->select("m.text","u.name","u.firstname","m.createdAt")
             ->andWhere('c.id = :val')
+            ->orderBy('m.createdAt', 'DESC')
+            ->setMaxResults(20)
             ->setParameter('val', $id);
 
         $query = $qb->getQuery();

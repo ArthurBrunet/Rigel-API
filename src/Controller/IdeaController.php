@@ -19,12 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class IdeaController extends AbstractController
 {
     /**
-     * @Route("/idea/create", name="mail", methods={"POST"})
+     * @Route("api/idea/create", name="create_idea", methods={"POST"})
      */
     public function sendIdeaBox(Request $request, EntityManagerInterface $em, UserRepository $userRepository, MailerInterface $mailer): Response
     {
         $data = json_decode($request->getContent(), true);
-        $idea = $data['idea'];
+        $dataIdea = $data['idea'];
         $userIdea = $data['user'];
         $title = $data['title'];
         $user = $userRepository->findOneBy(['email' => $userIdea]);
@@ -33,7 +33,7 @@ class IdeaController extends AbstractController
         if (!$user) {
             $idea = new IdeaBox();
             $idea->setIdUser($user);
-            $idea->setDescription($idea);
+            $idea->setDescription($dataIdea);
             $idea->setTitle($title);
             $idea->setPublicationDate($dateNow);
 
@@ -57,7 +57,7 @@ class IdeaController extends AbstractController
     }
 
     /**
-     * @Route("/idea", name="get_idea", methods={"GET"})
+     * @Route("api/idea", name="get_idea", methods={"GET"})
      */
     public function getIdea(IdeaBoxRepository $ideaBoxRepository) {
         // Méthode pour récupérer un utilisateur via son email
