@@ -28,7 +28,7 @@ class PostsController extends AbstractController
                 $filter[$value] = $request->query->get($value);
             }
         }
-        $posts = $postRepository->findBy($filter);
+        $posts = $postRepository->findBy($filter, array('dataPost' => 'DESC'));
         $result = [];
         foreach ($posts as $post) {
             $postDTO = new PostDTO();
