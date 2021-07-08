@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\CanalRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +19,7 @@ class MailController extends AbstractController
     /**
      * @Route("/mail/createUser", name="mail", methods={"POST"})
      */
-    public function createUser(Request $request, EntityManagerInterface $em, UserRepository $userRepository, MailerInterface $mailer): Response
+    public function createUser(Request $request, EntityManagerInterface $em, UserRepository $userRepository, MailerInterface $mailer,CanalRepository $canalRepository): Response
     {
         $datas = json_decode($request->getContent(), true);
         $user = new User();
@@ -29,9 +30,15 @@ class MailController extends AbstractController
             $user->setEmail($datas['email']);
             $user->setIsVisible(0);
             $user->setIsEnable(0);
+            $canals = $canalRepository->findAll();
+            if ($datas['role'] == "USER" || "ADMIN") {
+                $user->addCanal($canals[0]);
+                $user->addCanal($canals[1]);
+            }else{
+                $user->addCanal($canals[0]);
+            }
             $em->persist($user);
             $em->flush();
-
             $email = (new TemplatedEmail())
                 ->from('sirius@mailhog.local')
                 ->to($datas['email'])
