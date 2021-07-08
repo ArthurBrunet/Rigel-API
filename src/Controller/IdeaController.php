@@ -24,7 +24,7 @@ class IdeaController extends AbstractController
     public function sendIdeaBox(Request $request, EntityManagerInterface $em, UserRepository $userRepository, MailerInterface $mailer): Response
     {
         $data = json_decode($request->getContent(), true);
-        $idea = $data['idea'];
+        $dataIdea = $data['idea'];
         $userIdea = $data['user'];
         $title = $data['title'];
         $user = $userRepository->findOneBy(['email' => $userIdea]);
@@ -33,7 +33,7 @@ class IdeaController extends AbstractController
         if (!$user) {
             $idea = new IdeaBox();
             $idea->setIdUser($user);
-            $idea->setDescription($idea);
+            $idea->setDescription($dataIdea);
             $idea->setTitle($title);
             $idea->setPublicationDate($dateNow);
 
