@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerBuilder;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,8 +42,8 @@ class IdeaController extends AbstractController
             $em->flush();
 
             $email = (new TemplatedEmail())
-                ->from('sirius@mailhog.local')
-                ->to($userIdea)
+                ->from($userIdea)
+                ->to($_ENV['MAIL'])
                 ->subject($user->getUsername() . 'à une nouvelle pour améliorer la platforme!')
                 ->htmlTemplate('mail/index.html.twig')
                 ->context(["server_url" => $_ENV['SERVER'], "token" => $user->getToken()]);
