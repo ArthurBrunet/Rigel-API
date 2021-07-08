@@ -86,4 +86,19 @@ class UserController extends AbstractController
         $jsonContent = $serialize->serialize($user, 'json', SerializationContext::create());
         return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
     }
+
+    /**
+     * @Route("/user/getUserFromToken/{token}", name="user_registration", methods={"GET"})
+     */
+    public function getUserFromToken($token, UserRepository $userRepository): JsonResponse
+    {
+        $user = $userRepository->findOneBy(['token' => $token]);
+        if ($user) {
+            $serialize = SerializerBuilder::create()->build();
+            $jsonContent = $serialize->serialize($user, 'json', SerializationContext::create());
+            return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
+        }else {
+            return new JsonResponse(json_encode("user dont exist"), Response::HTTP_OK, [], true);
+        }
+    }
 }
