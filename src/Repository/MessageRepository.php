@@ -55,6 +55,8 @@ class MessageRepository extends ServiceEntityRepository
             ->leftJoin('m.created_by', 'u')
             ->select("m.text","u.name","u.firstname","m.createdAt")
             ->andWhere('c.id = :val')
+            ->orderBy('m.createdAt', 'DESC')
+            ->setMaxResults(20)
             ->setParameter('val', $id);
 
         $query = $qb->getQuery();

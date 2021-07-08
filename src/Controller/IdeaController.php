@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerBuilder;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class IdeaController extends AbstractController
 {
     /**
-     * @Route("/idea/create", name="mail", methods={"POST"})
+     * @Route("api/idea/create", name="create_idea", methods={"POST"})
      */
     public function sendIdeaBox(Request $request, EntityManagerInterface $em, UserRepository $userRepository, MailerInterface $mailer): Response
     {
@@ -30,7 +31,7 @@ class IdeaController extends AbstractController
         $user = $userRepository->findOneBy(['email' => $userIdea]);
         $dateNow = new \DateTime("now");
 
-        if (!$user) {
+        if ($user) {
             $idea = new IdeaBox();
             $idea->setIdUser($user);
             $idea->setDescription($dataIdea);
@@ -41,8 +42,8 @@ class IdeaController extends AbstractController
             $em->flush();
 
             $email = (new TemplatedEmail())
-                ->from('sirius@mailhog.local')
-                ->to($userIdea)
+                ->from($userIdea)
+                ->to($_ENV['MAIL'])
                 ->subject($user->getUsername() . 'à une nouvelle pour améliorer la platforme!')
                 ->htmlTemplate('mail/index.html.twig')
                 ->context(["server_url" => $_ENV['SERVER'], "token" => $user->getToken()]);
@@ -57,7 +58,7 @@ class IdeaController extends AbstractController
     }
 
     /**
-     * @Route("/idea", name="get_idea", methods={"GET"})
+     * @Route("api/idea", name="get_idea", methods={"GET"})
      */
     public function getIdea(IdeaBoxRepository $ideaBoxRepository) {
         // Méthode pour récupérer un utilisateur via son email
