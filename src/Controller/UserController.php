@@ -76,7 +76,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/get/{email}", name="user_registration", methods={"GET"})
+     * @Route("/user/get/{email}", name="user_get_by_mail", methods={"GET"})
      */
     public function getUserByEmail($email, UserRepository $userRepository): JsonResponse
     {
