@@ -59,7 +59,7 @@ class NotificationController extends AbstractController
 
                     $mailer->send($email);
                 }
-                $emergencyAperitif->setDate($date);
+                $emergencyAperitif->setDate(new \DateTime($date));
                 $emergencyAperitif->setMeetingPoint($meetingPoint);
                 $emergencyAperitif->setReason($reason);
                 $emergencyAperitif->setEmergency($emergency);
