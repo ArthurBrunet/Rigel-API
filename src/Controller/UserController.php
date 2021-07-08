@@ -88,7 +88,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/getUserFromToken/{token}", name="user_registration", methods={"GET"})
+     * @Route("/user/getUserFromToken/{token}", name="getUserFromToken", methods={"GET"})
      */
     public function getUserFromToken($token, UserRepository $userRepository): JsonResponse
     {
