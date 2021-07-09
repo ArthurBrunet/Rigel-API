@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CompanyController extends AbstractController
 {
     /**
-     * @Route("api/company/get/asc", name="get_company_asc", methods={"GET"})
+     * @Route("/api/company/get/asc", name="get_company_asc", methods={"GET"})
      */
     public function getCompanyASC(CompanyRepository $companyRepository): JsonResponse
     {
@@ -27,7 +27,7 @@ class CompanyController extends AbstractController
     }
 
     /**
-     * @Route("api/company/get/desc", name="get_company_desc", methods={"GET"})
+     * @Route("/api/company/get/desc", name="get_company_desc", methods={"GET"})
      */
     public function getCompanyDESC(CompanyRepository $companyRepository): JsonResponse
     {
@@ -39,7 +39,7 @@ class CompanyController extends AbstractController
     }
 
     /**
-     * @Route("api/company/get/Type/{name}", name="get_company_by_company_type", methods={"GET"})
+     * @Route("/api/company/get/Type/{name}", name="get_company_by_company_type", methods={"GET"})
      */
     public function getCompanyByTypeCompany($name, TypeCompanyRepository $typeCompanyRepository): JsonResponse
     {
@@ -51,7 +51,7 @@ class CompanyController extends AbstractController
     }
 
     /**
-     * @Route("api/typeCompany/get", name="get_company_type", methods={"GET"})
+     * @Route("/api/typeCompany/get", name="get_company_type", methods={"GET"})
      */
     public function getTypeCOmpany(TypeCompanyRepository $typeCompanyRepository): JsonResponse
     {
