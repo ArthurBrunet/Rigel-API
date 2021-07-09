@@ -47,7 +47,7 @@ class UserController extends AbstractController
         if ($token === $tokenUser && $visibleUser === FALSE && $enableUser === FALSE) {
 
             // Génération du form qui se base sur l'entité USER
-            $form = $this->createForm(RegistrationType::class, $user);
+            $form = $this->createForm(RegistrationType::class, $datas);
 
             $form->submit($datas);
 
