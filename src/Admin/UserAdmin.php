@@ -4,6 +4,9 @@
 namespace App\Admin;
 
 
+use App\Entity\Canal;
+use App\Entity\Company;
+use App\Entity\TypeCompany;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -11,6 +14,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\BooleanType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -33,7 +37,19 @@ final class UserAdmin extends AbstractAdmin
             ->add("isEnable", BooleanType::class)
             ->add("isVisible", BooleanType::class)
             ->add("phoneNumber", TextType::class)
-            ->add("competence", TextType::class);
+            ->add("competence", TextType::class)
+            ->add("canals", EntityType::class, [
+                'class' => Canal::class,
+                'choice_label' => function($category) {
+                    return $category->getName();
+                }
+            ])
+            ->add("company", EntityType::class, [
+            'class' => Company::class,
+            'choice_label' => function($category) {
+                return $category->getName();
+                }
+            ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)
