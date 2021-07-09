@@ -44,7 +44,7 @@ class MailController extends AbstractController
                 ->to($datas['email'])
                 ->subject('Sirius vous invite sur sa platforme!')
                 ->htmlTemplate('mail/index.html.twig')
-                ->context(["server_url" => $_ENV['SERVER'], "token" => $user->getToken()]);
+                ->context(["server_url" => $_ENV['SERVERAPP'], "token" => $user->getToken()]);
 
             $mailer->send($email);
 
